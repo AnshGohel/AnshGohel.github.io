@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ansh Gohel Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: developerFolio-style single scroll page: sticky nav, greeting with profile card, skills, projects, education, certifications, contact. */
+:root {
+  --bg: #f7f5fb;
+  --surface: #ffffff;
+  --fg: #1d1633;
+  --muted: #5d5675;
+  --line: #e3def0;
+  --accent: #55198b;
+  --accent-soft: #ede3f8;
+  --accent-fg: #ffffff;
+  --good: #1f7a4d;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #130e20; --surface: #1c1530; --fg: #f0ecfa; --muted: #a79fc2; --line: #342a52;
+    --accent: #b98cf0; --accent-soft: #2b2047; --accent-fg: #130e20; --good: #5fd49b;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #130e20; --surface: #1c1530; --fg: #f0ecfa; --muted: #a79fc2; --line: #342a52;
+  --accent: #b98cf0; --accent-soft: #2b2047; --accent-fg: #130e20; --good: #5fd49b;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 1040px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.1; margin: 0; }
+
+/* nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 12px; flex-wrap: wrap; }
+.brand { font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; text-decoration: none; letter-spacing: -0.01em; }
+.brand span { color: var(--accent); }
+.nav ul { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; align-items: center; }
+.nav a.link { text-decoration: none; font-size: 0.92rem; font-weight: 500; color: var(--muted); padding: 6px 10px; border-radius: 8px; }
+.nav a.link:hover { color: var(--fg); background: var(--accent-soft); }
+.toggle { border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: inherit; font-size: 0.85rem; padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+.toggle:hover { border-color: var(--accent); }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 40px; align-items: center; padding-block: 56px 40px; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
+.hero h1 { font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 800; letter-spacing: -0.02em; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero .sub { font-size: 1.15rem; color: var(--muted); margin: 16px 0 0; max-width: 56ch; }
+.hero .lead { margin: 16px 0 0; max-width: 62ch; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 11px 20px; border-radius: 10px; border: 2px solid var(--accent); background: var(--accent); color: var(--accent-fg); }
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn.ghost:hover { background: var(--accent-soft); filter: none; }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.profile { padding: 0; overflow: hidden; min-width: 0; }
+.profile .bar { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); align-items: center; }
+.profile .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: block; }
+.profile .bar b { margin-left: 8px; font-family: var(--font-mono); font-weight: 400; font-size: 0.75rem; color: var(--muted); }
+.profile pre { margin: 0; padding: 18px 18px 20px; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.75; overflow-x: auto; }
+.k { color: var(--accent); } .s { color: var(--good); } .m { color: var(--muted); }
+
+/* sections */
+section { padding-block: 48px; border-top: 1px solid var(--line); }
+.hd { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+.hd h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.015em; }
+.hd p { margin: 0; color: var(--muted); max-width: 46ch; }
+
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.skill { padding: 20px; min-width: 0; }
+.skill h3 { font-size: 1.05rem; margin-bottom: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.chip { font-family: var(--font-mono); font-size: 0.78rem; padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+.chip.learning { background: transparent; border: 1px dashed var(--accent); }
+
+.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+.proj { padding: 24px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.proj .tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.proj h3 { font-size: 1.35rem; }
+.proj p { margin: 0; color: var(--muted); }
+.proj ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 6px; font-size: 0.93rem; }
+.proj .chips { margin-top: auto; padding-top: 6px; }
+
+.edu { display: grid; gap: 16px; }
+.edu .row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 20px; padding: 20px 22px; }
+.edu .yr { font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); font-weight: 500; }
+.edu h3 { font-size: 1.15rem; }
+.edu p { margin: 4px 0 0; color: var(--muted); }
+
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.two .card { padding: 22px; min-width: 0; }
+.two h3 { font-size: 1.1rem; margin-bottom: 10px; }
+.two p { margin: 0; color: var(--muted); }
+.lang { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+.lang:last-child { border-bottom: 0; }
+.lang span:last-child { color: var(--muted); }
+
+.contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.contact .card { padding: 20px 22px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.contact .lbl { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.contact .val { font-weight: 600; overflow-wrap: anywhere; user-select: all; }
+.copy { align-self: flex-start; margin-top: 4px; border: 1px solid var(--line); background: transparent; color: var(--accent); font: inherit; font-size: 0.85rem; font-weight: 600; padding: 5px 12px; border-radius: 8px; cursor: pointer; }
+.copy:hover { background: var(--accent-soft); }
+footer { border-top: 1px solid var(--line); padding-top: 24px; color: var(--muted); font-size: 0.88rem; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: minmax(0, 1fr); padding-block: 36px 24px; gap: 28px; }
+  .edu .row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Ansh<span>.</span>Gohel</a>
+    <ul>
+      <li><a class="link" href="#skills">Skills</a></li>
+      <li><a class="link" href="#projects">Projects</a></li>
+      <li><a class="link" href="#education">Education</a></li>
+      <li><a class="link" href="#certs">Certifications</a></li>
+      <li><a class="link" href="#contact">Contact</a></li>
+      <li><button class="toggle" id="theme" type="button" aria-label="Switch colour theme">Theme</button></li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+  <div class="hero">
+    <div style="min-width:0">
+      <p class="eyebrow">Computer Engineering · Rajkot, Gujarat</p>
+      <h1>Hi, I'm <em>Ansh Gohel</em></h1>
+      <p class="sub">An AI and full-stack developer who ships working apps with Python, Flask and React.js.</p>
+      <p class="lead">I'm a Computer Engineering student at Government Engineering College, Rajkot. I've built a RAG chatbot with LangChain, an OCR-based ingredient checker using the Groq and Gemini APIs, and a full-stack job portal. I'm looking for AI/ML developer and full-stack internships and entry-level roles.</p>
+      <div class="cta">
+        <a class="btn" href="#projects">See my projects</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+        <a class="btn ghost" href="https://github.com/AnshGohel" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/ansh-gohelgecrcomp230200107039" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <div class="card profile" aria-label="Profile summary">
+      <div class="bar"><i></i><i></i><i></i><b>ansh.profile</b></div>
+<pre><span class="k">name</span>:      <span class="s">"Ansh Gohel"</span>
+<span class="k">degree</span>:    <span class="s">"B.E. Computer Engineering"</span>
+<span class="k">college</span>:   <span class="s">"GEC Rajkot (GTU)"</span>
+<span class="k">batch</span>:     <span class="s">2023 – 2027</span>
+<span class="k">stack</span>:     [<span class="s">"Python"</span>, <span class="s">"Flask"</span>, <span class="s">"React.js"</span>]
+<span class="k">building</span>:  [<span class="s">"RAG"</span>, <span class="s">"OCR"</span>, <span class="s">"REST APIs"</span>]
+<span class="k">learning</span>:  <span class="s">"Generative AI"</span>
+<span class="k">seeking</span>:   <span class="s">"AI/ML · Full-stack roles"</span></pre>
+    </div>
+  </div>
+
+  <section id="skills">
+    <div class="hd"><h2>Skills</h2><p>Tools I use to build, grouped by what they do.</p></div>
+    <div class="skills">
+      <div class="card skill"><h3>Languages</h3><ul class="chips"><li class="chip">Python</li><li class="chip">Java</li><li class="chip">JavaScript</li></ul></div>
+      <div class="card skill"><h3>AI &amp; ML</h3><ul class="chips"><li class="chip">Machine Learning</li><li class="chip learning">Generative AI (learning)</li></ul></div>
+      <div class="card skill"><h3>Data Science</h3><ul class="chips"><li class="chip">NumPy</li><li class="chip">Pandas</li><li class="chip">Matplotlib</li></ul></div>
+      <div class="card skill"><h3>Frontend</h3><ul class="chips"><li class="chip">React.js</li><li class="chip">HTML5</li><li class="chip">CSS3</li></ul></div>
+      <div class="card skill"><h3>Backend &amp; Database</h3><ul class="chips"><li class="chip">REST APIs</li><li class="chip">MySQL</li></ul></div>
+      <div class="card skill"><h3>Tools &amp; Platforms</h3><ul class="chips"><li class="chip">Git</li><li class="chip">GitHub</li><li class="chip">VS Code</li><li class="chip">Vercel</li></ul></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="hd"><h2>Projects</h2><p>Three things I've built, from retrieval-based AI to a full-stack product.</p></div>
+    <div class="projects">
+      <article class="card proj">
+        <span class="tag">AI · Retrieval</span>
+        <h3>RAG-Based AI Chatbot</h3>
+        <p>A chatbot that retrieves relevant information and answers with context-aware responses.</p>
+        <ul>
+          <li>Document retrieval and semantic search supply relevant context to the language model.</li>
+          <li>LangChain and the Groq API handle retrieval and response generation.</li>
+          <li>Interactive chat interface for asking questions and viewing answers.</li>
+        </ul>
+        <ul class="chips"><li class="chip">Python</li><li class="chip">LangChain</li><li class="chip">Groq API</li></ul>
+      </article>
+      <article class="card proj">
+        <span class="tag">AI · Computer vision</span>
+        <h3>Ingredient Checker</h3>
+        <p>An AI-powered food label scanner that turns an ingredient list into health insights.</p>
+        <ul>
+          <li>Scans packaged-food labels with OCR and returns AI-generated insights.</li>
+          <li>Colour-coded safety system classifies each ingredient by risk level.</li>
+          <li>Personalised health warnings generated from each user's profile.</li>
+        </ul>
+        <ul class="chips"><li class="chip">Tesseract OCR</li><li class="chip">Groq API</li><li class="chip">Gemini API</li></ul>
+      </article>
+      <article class="card proj">
+        <span class="tag">Full stack</span>
+        <h3>HireFlow</h3>
+        <p>A job portal where employers post jobs and job seekers apply and track applications.</p>
+        <ul>
+          <li>JWT authentication with role-based access for employers and job seekers.</li>
+          <li>Cloudinary integration for resume and image uploads.</li>
+          <li>RESTful APIs for user management, job listings and application tracking.</li>
+        </ul>
+        <ul class="chips"><li class="chip">React.js</li><li class="chip">JWT</li><li class="chip">Cloudinary</li><li class="chip">REST APIs</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="hd"><h2>Education</h2></div>
+    <div class="edu">
+      <div class="card row"><div class="yr">2023 – 2027</div><div><h3>Government Engineering College, Rajkot (GTU)</h3><p>B.E. Computer Engineering</p></div></div>
+      <div class="card row"><div class="yr">2021 – 2023</div><div><h3>Smt. V.S. Shah Higher Secondary School</h3><p>Higher Secondary (12th)</p></div></div>
+    </div>
+  </section>
+
+  <section id="certs">
+    <div class="hd"><h2>Certifications &amp; Languages</h2></div>
+    <div class="two">
+      <div class="card">
+        <h3>Java SE 11 Developer exam prep</h3>
+        <p>Preparation for exams 1Z0-819 and 1Z0-817. Udemy, June 2026, 47 hours.</p>
+      </div>
+      <div class="card">
+        <h3>Languages</h3>
+        <div class="lang"><span>English</span><span>Professional</span></div>
+        <div class="lang"><span>Hindi</span><span>Professional</span></div>
+        <div class="lang"><span>Gujarati</span><span>Native</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="hd"><h2>Contact</h2><p>Open to AI/ML and full-stack internships and entry-level roles.</p></div>
+    <div class="contact">
+      <div class="card"><span class="lbl">Email</span><a class="val" style="color:var(--accent);text-decoration:none;user-select:auto" href="mailto:ansh12122005@gmail.com">ansh12122005@gmail.com</a><a class="btn" style="align-self:flex-start;margin-top:6px" href="mailto:ansh12122005@gmail.com">Send email</a><button class="copy" type="button" data-copy="ansh12122005@gmail.com">Copy email</button></div>
+      <div class="card"><span class="lbl">Phone</span><a class="val" style="color:var(--accent);text-decoration:none;user-select:auto" href="tel:+918401241361">+91 8401241361</a><a class="btn" style="align-self:flex-start;margin-top:6px" href="tel:+918401241361">Call now</a><button class="copy" type="button" data-copy="+91 8401241361">Copy number</button></div>
+      <div class="card"><span class="lbl">Location</span><span class="val">Rajkot, Gujarat, India</span></div>
+      <div class="card"><span class="lbl">GitHub</span><a class="btn" style="align-self:flex-start" href="https://github.com/AnshGohel" target="_blank" rel="noopener noreferrer">Open GitHub</a></div>
+      <div class="card"><span class="lbl">LinkedIn</span><a class="btn" style="align-self:flex-start" href="https://www.linkedin.com/in/ansh-gohelgecrcomp230200107039" target="_blank" rel="noopener noreferrer">Open LinkedIn</a></div>
+    </div>
+  </section>
+
+  <footer>© 2026 Ansh Gohel · Layout inspired by developerFolio.</footer>
+</main>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById("theme");
+  btn.addEventListener("click", function () {
+    var dark = root.getAttribute("data-theme") === "dark" ||
+      (!root.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    root.setAttribute("data-theme", dark ? "light" : "dark");
+  });
+  document.querySelectorAll(".copy").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var text = b.getAttribute("data-copy");
+      var done = function () { var o = b.textContent; b.textContent = "Copied"; setTimeout(function () { b.textContent = o; }, 1400); };
+      var fallback = function () {
+        var sel = window.getSelection(), r = document.createRange();
+        r.selectNodeContents(b.parentNode.querySelector(".val")); sel.removeAllRanges(); sel.addRange(r);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
